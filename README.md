@@ -16,7 +16,7 @@ Download Plasmid, Substrate, and Fantasy from Nucleoid's maven. Download my vers
 - [Download Plasmid](https://maven.nucleoid.xyz/xyz/nucleoid/plasmid/0.5%2B1.19.3-SNAPSHOT/plasmid-0.5%2B1.19.3-20221210.093758-1.jar)
 - [Download Substrate](https://maven.nucleoid.xyz/xyz/nucleoid/substrate/0.2.0/substrate-0.2.0.jar)
 - [Download Fantasy](https://maven.nucleoid.xyz/xyz/nucleoid/fantasy/0.4.9%2B1.19.3/fantasy-0.4.9%2B1.19.3.jar)
-- [Download Bedwars Mod]()
+- [Download Bedwars Mod](https://github.com/ProtoSharkk/bedwars-plus/releases/tag/v0.2)
 These four mods only need to be added to the server, not the client. Upload these .jar files to whatever Minecraft server host you're using. The rest of the mods need to be added to both the client and the server. Download Bookshelf, Enchancement, Enchantment Descriptions, and Combit from Modrinth. Download my version of Pick Your Poison from GitHub.
 - [Download Bookshelf](https://cdn.modrinth.com/data/uy4Cnpcm/versions/xwtJHipv/Bookshelf-Forge-1.19.3-17.1.6.jar)
 - [Download Enchancemnet](https://cdn.modrinth.com/data/6hN1V6wJ/versions/BNyQlGJb/enchancement-1.19-16.jar)
