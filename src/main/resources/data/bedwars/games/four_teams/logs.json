@@ -4,7 +4,7 @@
   "description": "game.bedwars.desc",
   "map": "bedwars:logs",
   "players": {
-    "min": 4,
+    "min": 2,
     "max": 16,
     "threshold": 4
   },

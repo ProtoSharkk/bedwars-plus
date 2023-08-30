@@ -46,11 +46,11 @@
     "small_island_cutoff": 25
   },
   "players": {
-    "min": 4,
+    "min": 2,
     "max": 16,
     "threshold": 4
   },
-  "keep_inventory": true,
+  "keep_inventory": false,
   "combat": {
     "old_mechanics": false
   },

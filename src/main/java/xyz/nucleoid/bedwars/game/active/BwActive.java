@@ -129,8 +129,6 @@ public final class BwActive {
             activity.allow(GameRuleType.PVP);
             activity.allow(GameRuleType.UNSTABLE_TNT);
             activity.deny(GameRuleType.CRAFTING);
-            activity.allow(GameRuleType.FALL_DAMAGE);
-            activity.deny(GameRuleType.HUNGER);
             activity.allow(GameRuleType.TRIDENTS_LOYAL_IN_VOID);
             activity.allow(BedWars.BLAST_PROOF_GLASS_RULE);
             activity.allow(BedWars.LEAVES_DROP_GOLDEN_APPLES);
@@ -430,8 +428,10 @@ public final class BwActive {
     }
 
     public static class TeamState {
-        public static final int MAX_SHARPNESS = 3;
+        public static final int MAX_SHARPNESS = 5;
         public static final int MAX_PROTECTION = 3;
+        public static final int MAX_JUMP = 64;
+        public static final int MAX_DASH = 1;
 
         final GameTeam team;
 
@@ -443,6 +443,8 @@ public final class BwActive {
         public boolean hasteEnabled;
         public int swordSharpness;
         public int armorProtection;
+        public int jumpLevel;
+        public int dashLevel;
 
         TeamState(GameTeam team) {
             this.team = team;

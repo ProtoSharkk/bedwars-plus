@@ -1,10 +1,12 @@
 package xyz.nucleoid.bedwars.game.active.upgrade;
 
 import xyz.nucleoid.plasmid.shop.Cost;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import moriyashiine.enchancement.common.registry.ModEnchantments;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
@@ -37,9 +39,19 @@ public final class UpgradeType<T extends Upgrade> {
     public static final UpgradeType<WeaponUpgrade> SHEARS = new UpgradeType<WeaponUpgrade>()
             .addLevel(new WeaponUpgrade(Items.SHEARS, Cost.ofIron(40)));
 
+    public static final UpgradeType<WeaponUpgrade> TRIDENT = new UpgradeType<WeaponUpgrade>()
+            .addLevel(new WeaponUpgrade(Items.TRIDENT, Cost.ofGold(8)))
+            .addLevel(new WeaponUpgrade(trident(Items.TRIDENT, 2), Cost.ofDiamonds(1)));
+
     private static ItemStack diamondTool(Item item) {
         ItemStack stack = new ItemStack(item);
         stack.addEnchantment(Enchantments.EFFICIENCY, 2);
+        return stack;
+    }
+
+    private static ItemStack trident(Item item, int level) {
+        ItemStack stack = new ItemStack(item);
+        if (level>=2) {stack.addEnchantment(ModEnchantments.LEECH, 1);};
         return stack;
     }
 

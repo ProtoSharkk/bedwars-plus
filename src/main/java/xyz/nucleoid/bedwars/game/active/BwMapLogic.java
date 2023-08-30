@@ -63,7 +63,7 @@ public final class BwMapLogic {
 
             if (!entities.isEmpty()) {
                 for (PlayerEntity player : entities) {
-                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 5, 1));
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 20 * 15, 1));
                     player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 20 * 5, 1));
                 }
                 return true;

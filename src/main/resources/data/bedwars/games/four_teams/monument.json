@@ -4,7 +4,7 @@
   "description": "game.bedwars.desc",
   "map": "bedwars:monument",
   "players": {
-    "min": 4,
+    "min": 2,
     "max": 16,
     "threshold": 4
   },

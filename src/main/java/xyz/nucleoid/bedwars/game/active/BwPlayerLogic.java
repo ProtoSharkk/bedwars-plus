@@ -14,6 +14,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
 import xyz.nucleoid.bedwars.game.BwMap;
+import com.turtlearmymc.doublejump.Doublejump;
+import moriyashiine.enchancement.common.registry.ModEnchantments;
 
 import java.util.function.Predicate;
 
@@ -88,6 +90,8 @@ public final class BwPlayerLogic {
 
         this.applyEnchantments(player, stack -> stack.getItem() instanceof SwordItem, Enchantments.SHARPNESS, teamState.swordSharpness);
         this.applyEnchantments(player, stack -> stack.getItem() instanceof ArmorItem, Enchantments.PROTECTION, teamState.armorProtection);
+        this.applyEnchantments(player, stack -> stack.getItem() instanceof ArmorItem, Doublejump.DOUBLE_JUMP, teamState.jumpLevel);
+        this.applyEnchantments(player, stack -> stack.getItem() instanceof ArmorItem, ModEnchantments.DASH, teamState.dashLevel);
     }
 
     private void applyEnchantments(ServerPlayerEntity player, Predicate<ItemStack> predicate, Enchantment enchantment, int level) {

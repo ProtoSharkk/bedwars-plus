@@ -17,6 +17,8 @@ import xyz.nucleoid.plasmid.shop.Cost;
 import xyz.nucleoid.plasmid.shop.ShopEntry;
 import xyz.nucleoid.plasmid.util.Guis;
 import xyz.nucleoid.plasmid.util.ItemStackBuilder;
+import com.turtlearmymc.doublejump.EnchantmentDoublejump;
+import moriyashiine.enchancement.common.registry.ModEnchantments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,11 +71,12 @@ public final class BwTeamShop {
                     })
             );
 
+
             String sharpnessName = "sharpness";
             shop.add(ShopEntry.ofIcon((p, e) -> createIconLvlFor(p, e, Items.DIAMOND_SWORD, sharpnessName, Math.min(teamState.swordSharpness + 1, BwActive.TeamState.MAX_SHARPNESS),
                     teamState.swordSharpness >= BwActive.TeamState.MAX_SHARPNESS)
                     )
-                            .withCost((p, e) -> Cost.ofDiamonds(teamScaledCost(game, team, stagedUpgrade(4, teamState.swordSharpness))))
+                            .withCost((p, e) -> Cost.ofDiamonds(teamScaledCost(game, team, stagedUpgrade(3, teamState.swordSharpness))))
                             .onBuyCheck((p, e) -> teamState.swordSharpness < BwActive.TeamState.MAX_SHARPNESS && e.getCost(p).takeItems(p))
                             .onBuy(p -> {
                                 teamState.swordSharpness++;
@@ -86,7 +89,7 @@ public final class BwTeamShop {
             shop.add(ShopEntry.ofIcon((p, e) -> createIconLvlFor(p, e, Items.DIAMOND_CHESTPLATE, protectionName, Math.min(teamState.armorProtection + 1, BwActive.TeamState.MAX_PROTECTION),
                     teamState.armorProtection >= BwActive.TeamState.MAX_PROTECTION)
                     )
-                            .withCost((p, e) -> Cost.ofDiamonds(teamScaledCost(game, team, stagedUpgrade(2, teamState.armorProtection))))
+                            .withCost((p, e) -> Cost.ofDiamonds(teamScaledCost(game, team, stagedUpgrade(3, teamState.armorProtection))))
                             .onBuyCheck((p, e) -> teamState.armorProtection < BwActive.TeamState.MAX_PROTECTION && e.getCost(p).takeItems(p))
                             .onBuy(p -> {
                                 teamState.armorProtection++;
@@ -94,6 +97,34 @@ public final class BwTeamShop {
                                 game.broadcast.broadcastToTeam(participant.team, Text.translatable("text.bedwars.shop.upgrade." + protectionName + ".buy", p.getDisplayName().copy(), Text.translatable("enchantment.level." + teamState.armorProtection)).formatted(Formatting.BOLD, Formatting.AQUA));
                             })
             );
+
+            String jumpName = "double_jump";
+            shop.add(ShopEntry.ofIcon((p, e) -> createIconLvlFor(p, e, Items.DIAMOND_BOOTS, jumpName, Math.min(teamState.jumpLevel + 1, BwActive.TeamState.MAX_JUMP),
+                    teamState.jumpLevel >= BwActive.TeamState.MAX_JUMP)
+                    )
+                            .withCost((p, e) -> Cost.ofDiamonds(teamScaledCost(game, team, stagedUpgrade(2, teamState.jumpLevel))))
+                            .onBuyCheck((p, e) -> teamState.jumpLevel < BwActive.TeamState.MAX_JUMP && e.getCost(p).takeItems(p))
+                            .onBuy(p -> {
+                                teamState.jumpLevel++;
+                                game.teamLogic.applyEnchantments(participant.team);
+                                game.broadcast.broadcastToTeam(participant.team, Text.translatable("text.bedwars.shop.upgrade" + jumpName + ".buy", p.getDisplayName().copy(), Text.translatable("enchantment.level." + teamState.jumpLevel)).formatted(Formatting.BOLD, Formatting.AQUA));
+                            })
+            );
+
+            String dashName = "dash";
+            shop.add(ShopEntry.ofIcon((p, e) -> createIconLvlFor(p, e, Items.FEATHER, dashName, Math.min(teamState.dashLevel + 1, BwActive.TeamState.MAX_DASH),
+                    teamState.dashLevel >= BwActive.TeamState.MAX_DASH)
+                    )
+                            .withCost((p, e) -> Cost.ofDiamonds(2))
+                            .onBuyCheck((p, e) -> teamState.dashLevel < BwActive.TeamState.MAX_DASH && e.getCost(p).takeItems(p))
+                            .onBuy(p -> {
+                                teamState.dashLevel++;
+                                game.teamLogic.applyEnchantments(participant.team);
+                                game.broadcast.broadcastToTeam(participant.team, Text.translatable("text.bedwars.shop.upgrade" + dashName + ".buy", p.getDisplayName().copy(), Text.translatable("enchantment.level." + teamState.dashLevel)).formatted(Formatting.BOLD, Formatting.AQUA));
+                            })
+            );
+
+
         }
 
         BwMap.TeamSpawn teamSpawn = game.map.getTeamSpawn(participant.team.key());

@@ -34,6 +34,7 @@ public final class BwParticipant {
         this.upgrades.add(UpgradeType.PICKAXE);
         this.upgrades.add(UpgradeType.AXE);
         this.upgrades.add(UpgradeType.SHEARS);
+        this.upgrades.add(UpgradeType.TRIDENT);
     }
 
     public void startRespawning(BwMap.TeamSpawn spawn) {

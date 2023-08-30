@@ -16,6 +16,7 @@ loom {
 repositories {
   maven { url = "https://maven.nucleoid.xyz/" }
   maven { url = "https://maven.gegy.dev/" }
+  flatDir { dirs 'libs' }
 }
 
 dependencies {
@@ -28,6 +29,9 @@ dependencies {
   modImplementation "xyz.nucleoid:plasmid:${project.plasmid_version}"
   modImplementation "xyz.nucleoid:substrate:0.2.0"
   implementation include('kdotjpg:open-simplex:2.0')
+  modImplementation "com.turtlearmymc:doublejump-1.19.3"
+  modImplementation "moriyashiine:enchancement-1.19"
+  modImplementation "ladysnake:pickyourpoison-1.19.3"
 }
 
 processResources {

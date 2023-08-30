@@ -31,6 +31,9 @@ import xyz.nucleoid.plasmid.shop.ShopEntry;
 import xyz.nucleoid.plasmid.util.ColoredBlocks;
 import xyz.nucleoid.plasmid.util.Guis;
 import xyz.nucleoid.plasmid.util.ItemStackBuilder;
+import ladysnake.pickyourpoison.common.PickYourPoison;
+import ladysnake.pickyourpoison.common.item.nuke;
+import moriyashiine.enchancement.common.registry.ModEnchantments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +53,12 @@ public final class BwItemShop extends LayeredGui {
         this.participant = participant;
         List<GuiElementInterface> navbar = new ArrayList<>();
 
-        this.addNavigationEntry(Items.END_STONE, "blocks", true, navbar, this::createBlocks);
+        this.addNavigationEntry(Items.NETHER_STAR, "quickbuy", true, navbar, this::createDefault);
+        this.addNavigationEntry(Items.END_STONE, "blocks", false, navbar, this::createBlocks);
         this.addNavigationEntry(Items.DIAMOND_SWORD, "weapons", false, navbar, this::createWeapons);
-        this.addNavigationEntry(Items.IRON_CHESTPLATE, "armor", false, navbar, this::createArmor);
         this.addNavigationEntry(Items.STONE_PICKAXE, "tools", false, navbar, this::createTools);
         this.addNavigationEntry(Items.POTION, "utils", false, navbar, this::createUtils);
+        this.addNavigationEntry(PickYourPoison.COMATOSE_POISON_DART, "darts", false, navbar, this::createDarts);
 
         Layer navbar1 = Guis.createSelectorLayer(1, 9, navbar);
         this.addLayer(navbar1, 0, 0);
@@ -120,6 +124,17 @@ public final class BwItemShop extends LayeredGui {
             this.currentShop = this.addLayer(layer, SHOP_X, SHOP_Y);
         }
     }
+    private void createDefault(Consumer<GuiElementInterface> items) {
+        DyeColor color = participant.team.config().blockDyeColor();
+        PlayerUpgrades upgrades = participant.upgrades;
+        items.accept(ShopEntry.buyItem(new ItemStack(ColoredBlocks.wool(color), 16), Cost.ofIron(4)));
+        addUpgrade(items, upgrades, UpgradeType.SWORD, "sword");
+        addUpgrade(items, upgrades, UpgradeType.PICKAXE, "pickaxe");
+        addUpgrade(items, upgrades, UpgradeType.AXE, "axe");
+        addUpgrade(items, upgrades, UpgradeType.SHEARS, "shears");
+        addUpgrade(items, upgrades, UpgradeType.ARMOR, "armor");
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.GOLDEN_CARROT, 2), Cost.ofIron(8)));
+    }
 
     private void createBlocks(Consumer<GuiElementInterface> items) {
         DyeColor color = participant.team.config().blockDyeColor();
@@ -135,7 +150,6 @@ public final class BwItemShop extends LayeredGui {
         items.accept(ShopEntry.buyItem(new ItemStack(Blocks.OBSIDIAN, 4), Cost.ofEmeralds(4)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.COBWEB, 4), Cost.ofGold(8)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.SCAFFOLDING, 8), Cost.ofGold(4)));
-        items.accept(ShopEntry.buyItem(new ItemStack(Items.TORCH, 8), Cost.ofGold(1)));
     }
 
     private void createWeapons(Consumer<GuiElementInterface> items) {
@@ -148,24 +162,21 @@ public final class BwItemShop extends LayeredGui {
                 .addLore(Text.translatable("item.bedwars.knockback_stick.description"))
                 .build();
 
-        items.accept(ShopEntry.buyItem(knockbackStick, Cost.ofGold(10)));
+        items.accept(ShopEntry.buyItem(knockbackStick, Cost.ofEmeralds(3)));
 
         ItemStack trident = ItemStackBuilder.of(Items.TRIDENT)
                 .setUnbreakable()
                 .addEnchantment(Enchantments.LOYALTY, 1)
                 .build();
-        items.accept(ShopEntry.buyItem(trident, Cost.ofEmeralds(6)));
+        addUpgrade(items, upgrades, UpgradeType.TRIDENT, "trident");
 
         items.accept(ShopEntry.buyItem(ItemStackBuilder.of(Items.BOW).setUnbreakable().build(), Cost.ofGold(12)));
         items.accept(ShopEntry.buyItem(ItemStackBuilder.of(Items.BOW).setUnbreakable().addEnchantment(Enchantments.POWER, 2).build(), Cost.ofGold(24)));
         items.accept(ShopEntry.buyItem(ItemStackBuilder.of(Items.BOW).setUnbreakable().addEnchantment(Enchantments.PUNCH, 1).build(), Cost.ofEmeralds(6)));
-        items.accept(ShopEntry.buyItem(new ItemStack(Items.ARROW, 8), Cost.ofGold(2)));
-    }
-
-    private void createArmor(Consumer<GuiElementInterface> items) {
-        PlayerUpgrades upgrades = participant.upgrades;
-        addUpgrade(items, upgrades, UpgradeType.ARMOR, "armor");
-        items.accept(ShopEntry.buyItem(ItemStackBuilder.of(Items.SHIELD).setUnbreakable().build(), Cost.ofGold(10)));
+        items.accept(ShopEntry.buyItem(ItemStackBuilder.of(Items.CROSSBOW).setUnbreakable().build(), Cost.ofGold(16)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.ARROW, 4), Cost.ofGold(2)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.END_CRYSTAL, 2), Cost.ofEmeralds(2)));
+        
     }
 
     private void createTools(Consumer<GuiElementInterface> items) {
@@ -173,6 +184,13 @@ public final class BwItemShop extends LayeredGui {
         addUpgrade(items, upgrades, UpgradeType.PICKAXE, "pickaxe");
         addUpgrade(items, upgrades, UpgradeType.AXE, "axe");
         addUpgrade(items, upgrades, UpgradeType.SHEARS, "shears");
+        addUpgrade(items, upgrades, UpgradeType.ARMOR, "armor");
+        
+        ItemStack grappler = ItemStackBuilder.of(Items.FISHING_ROD)
+                .addEnchantment(ModEnchantments.GRAPPLE, 1)
+                .setName(Text.translatable("Grappling Hook"))
+                .build();
+        items.accept(ShopEntry.buyItem(grappler, Cost.ofEmeralds(1)));
     }
 
     private void createUtils(Consumer<GuiElementInterface> items) {
@@ -183,15 +201,24 @@ public final class BwItemShop extends LayeredGui {
         StatusEffectInstance swiftnessEffect = new StatusEffectInstance(StatusEffects.SPEED, 600, 2);
         items.accept(ShopEntry.buyItem(createPotion(swiftnessEffect).setCustomName(Text.translatable("item.minecraft.potion.effect.swiftness")), Cost.ofEmeralds(1)));
 
-        items.accept(ShopEntry.buyItem(new ItemStack(Blocks.TNT), Cost.ofGold(8)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Blocks.TNT), Cost.ofGold(4)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.FIRE_CHARGE).setCustomName(Text.translatable(EntityType.FIREBALL.getTranslationKey())), Cost.ofIron(40)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.ENDER_PEARL), Cost.ofEmeralds(4)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.WATER_BUCKET), Cost.ofGold(10)));
-        items.accept(ShopEntry.buyItem(new ItemStack(Items.LAVA_BUCKET), Cost.ofGold(24)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.LAVA_BUCKET), Cost.ofEmeralds(1)));
         items.accept(ShopEntry.buyItem(new ItemStack(Items.GOLDEN_APPLE), Cost.ofGold(3)));
-        items.accept(ShopEntry.buyItem(new ItemStack(BwItems.CHORUS_FRUIT).setCustomName(Text.translatable(Items.CHORUS_FRUIT.getTranslationKey())), Cost.ofGold(8)));
-        items.accept(ShopEntry.buyItem(new ItemStack(BwItems.BRIDGE_EGG), Cost.ofEmeralds(2)));
+        items.accept(ShopEntry.buyItem(new ItemStack(BwItems.CHORUS_FRUIT).setCustomName(Text.translatable(Items.CHORUS_FRUIT.getTranslationKey())), Cost.ofGold(3)));
+        items.accept(ShopEntry.buyItem(new ItemStack(BwItems.BRIDGE_EGG), Cost.ofEmeralds(1)));
         items.accept(ShopEntry.buyItem(new ItemStack(BwItems.MOVING_CLOUD), Cost.ofEmeralds(1)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.TOTEM_OF_UNDYING), Cost.ofEmeralds(4)));
+        items.accept(ShopEntry.buyItem(new ItemStack(Items.CREEPER_SPAWN_EGG), Cost.ofGold(4)));
+    }
+
+    private void createDarts(Consumer<GuiElementInterface> items) {
+        items.accept(ShopEntry.buyItem(new ItemStack(PickYourPoison.COMATOSE_POISON_DART), Cost.ofEmeralds(2)));
+        items.accept(ShopEntry.buyItem(new ItemStack(PickYourPoison.VULNERABILITY_POISON_DART), Cost.ofIron(40)));
+        items.accept(ShopEntry.buyItem(new ItemStack(PickYourPoison.GREEN_POISON_DART_FROG_BOWL), Cost.ofIron(20)));
+        items.accept(ShopEntry.buyItem(new ItemStack(nuke.NUKE), Cost.ofEmeralds(69)));
     }
 
     private class NavbarItem implements GuiElementInterface {

@@ -5,11 +5,11 @@
   "map": "bedwars:hellish_nightmare",
   "dimension": "minecraft:the_nether",
   "players": {
-    "min": 4,
+    "min": 2,
     "max": 16,
     "threshold": 4
   },
-  "keep_inventory": true,
+  "keep_inventory": false,
   "combat": {
     "old_mechanics": false
   },

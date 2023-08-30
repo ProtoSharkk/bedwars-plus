@@ -42,6 +42,7 @@
   "text.bedwars.shop.category.weapons": "Weapons",
   "text.bedwars.shop.category.tools": "Tools",
   "text.bedwars.shop.category.utils": "Utilities and Potions",
+  "text.bedwars.shop.category.quickbuy": "Quick Buy",
   "text.bedwars.shop.type.item": "Item Shop",
   "text.bedwars.shop.type.team": "Team Shop",
   "text.bedwars.shop.upgrade.armor": "Upgrade Armor",
@@ -80,5 +81,11 @@
   "text.bedwars.title.bed_destroyed": "Bed destroyed!",
   "text.bedwars.title.cannot_respawn": "You can no longer respawn!",
   "text.bedwars.title.trap_set_off": "Trap activated!",
-  "text.bedwars.trap_set_off": "A player set off your team trap!"
+  "text.bedwars.trap_set_off": "A player set off your team trap!",
+  "text.bedwars.shop.upgrade.double_jump": "Double Jump",
+  "text.bedwars.shop.upgrade.double_jump.description.1": "Pressing the jump key while midair will cause you to double jump",
+  "text.bedwars.shop.upgrade.double_jump.description.2": "",
+  "text.bedwars.shop.upgrade.dash": "Dash",
+  "text.bedwars.shop.upgrade.dash.description.1": "All team members will be able to jett dash",
+  "text.bedwars.shop.upgrade.dash.description.2": "Press shift while midair to dash in the direction you're looking"
 }
